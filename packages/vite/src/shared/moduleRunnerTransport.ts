@@ -1,11 +1,11 @@
 import { nanoid } from 'nanoid/non-secure'
-import type { CustomPayload, HotPayload } from 'types/hmrPayload'
 import { promiseWithResolvers } from './utils'
 import type {
   InvokeMethods,
   InvokeResponseData,
   InvokeSendData,
 } from './invokeMethods'
+import type { CustomPayload, HotPayload } from '#types/hmrPayload'
 
 export type ModuleRunnerTransportHandlers = {
   onMessage: (data: HotPayload) => void

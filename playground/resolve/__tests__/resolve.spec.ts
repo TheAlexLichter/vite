@@ -1,8 +1,8 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { expect, test } from 'vitest'
-import { isBuild, isWindows, page, testDir, viteTestUrl } from '~utils'
+import { describe, expect, test } from 'vitest'
+import { isBuild, isServe, isWindows, page, testDir, viteTestUrl } from '~utils'
 
 test('bom import', async () => {
   expect(await page.textContent('.utf8-bom')).toMatch('[success]')
@@ -163,6 +163,10 @@ test('plugin resolved custom virtual file', async () => {
   expect(await page.textContent('.custom-virtual')).toMatch('[success]')
 })
 
+test('virtual file with URL scheme should not be rewritten (#20803)', async () => {
+  expect(await page.textContent('.virtual-url-scheme')).toMatch('[success]')
+})
+
 test('resolve inline package', async () => {
   expect(await page.textContent('.inline-pkg')).toMatch('[success]')
 })
@@ -224,6 +228,10 @@ test('Resolving with query with imports field', async () => {
   )
 })
 
+test('Resolving dot-prefixed directory with imports field', async () => {
+  expect(await page.textContent('.imports-dot-prefixed')).toMatch('[success]')
+})
+
 test("Resolve doesn't interrupt page request with trailing query and .css", async () => {
   await page.goto(viteTestUrl + '/?test.css')
   expect(await page.locator('vite-error-overlay').count()).toBe(0)
@@ -262,4 +270,27 @@ test.runIf(isBuild)('sideEffects field glob pattern is respected', async () => {
     () => (window as any).__SIDE_EFFECT,
   )
   expect(sideEffectValues).toStrictEqual(['success'])
+})
+
+describe.runIf(isServe)('HEAD request handling', () => {
+  test('HEAD request to JS file returns correct Content-Type', async () => {
+    const response = await fetch(new URL('/absolute.js', viteTestUrl), {
+      method: 'HEAD',
+    })
+    expect(response.headers.get('content-type')).toBe('text/javascript')
+    expect(response.status).toBe(200)
+    const text = await response.text()
+    expect(text).toBe('')
+  })
+
+  test('HEAD request to CSS file returns correct Content-Type', async () => {
+    const response = await fetch(new URL('/style.css', viteTestUrl), {
+      method: 'HEAD',
+      headers: {
+        Accept: 'text/css',
+      },
+    })
+    expect(response.headers.get('content-type')).toBe('text/css')
+    expect(response.status).toBe(200)
+  })
 })

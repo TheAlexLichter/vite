@@ -36,17 +36,20 @@ import {
 import type { Environment } from '../environment'
 
 // referenceId is base64url but replaces - with $
-export const assetUrlRE = /__VITE_ASSET__([\w$]+)__(?:\$_(.*?)__)?/g
+export const assetUrlRE: RegExp = /__VITE_ASSET__([\w$]+)__(?:\$_(.*?)__)?/g
 
 const jsSourceMapRE = /\.[cm]?js\.map$/
 
-export const noInlineRE = /[?&]no-inline\b/
-export const inlineRE = /[?&]inline\b/
+export const noInlineRE: RegExp = /[?&]no-inline\b/
+export const inlineRE: RegExp = /[?&]inline\b/
 
 const assetCache = new WeakMap<Environment, Map<string, string>>()
 
 /** a set of referenceId for entry CSS assets for each environment */
-export const cssEntriesMap = new WeakMap<Environment, Set<string>>()
+export const cssEntriesMap = new WeakMap<
+  Environment,
+  Map<string, string>
+>()
 
 // add own dictionary entry by directly assigning mrmime
 export function registerCustomMime(): void {
@@ -148,7 +151,7 @@ export function assetPlugin(config: ResolvedConfig): Plugin {
 
     buildStart() {
       assetCache.set(this.environment, new Map())
-      cssEntriesMap.set(this.environment, new Set())
+      cssEntriesMap.set(this.environment, new Map())
     },
 
     resolveId: {
@@ -166,13 +169,14 @@ export function assetPlugin(config: ResolvedConfig): Plugin {
     },
 
     load: {
-      async handler(id) {
-        if (id[0] === '\0') {
+      filter: {
+        id: {
           // Rollup convention, this id should be handled by the
           // plugin that marked it with \0
-          return
-        }
-
+          exclude: /^\0/,
+        },
+      },
+      async handler(id) {
         // raw requests, read from disk
         if (rawRE.test(id)) {
           const file = checkPublicFile(id, config) || cleanUrl(id)
@@ -341,13 +345,13 @@ export function getPublicAssetFilename(
   return publicAssetUrlCache.get(config)?.get(hash)
 }
 
+// inner map: hash -> url
 export const publicAssetUrlCache = new WeakMap<
   ResolvedConfig,
-  // hash -> url
   Map<string, string>
 >()
 
-export const publicAssetUrlRE = /__VITE_PUBLIC_ASSET__([a-z\d]{8})__/g
+export const publicAssetUrlRE: RegExp = /__VITE_PUBLIC_ASSET__([a-z\d]{8})__/g
 
 export function publicFileToBuiltUrl(
   url: string,
@@ -448,10 +452,11 @@ export async function urlToBuiltUrl(
   if (checkPublicFile(url, topLevelConfig)) {
     return publicFileToBuiltUrl(url, topLevelConfig)
   }
-  const file =
+  const file = normalizePath(
     url[0] === '/'
       ? path.join(topLevelConfig.root, url)
-      : path.join(path.dirname(importer), url)
+      : path.join(path.dirname(importer), url),
+  )
   return fileToBuiltUrl(
     pluginContext,
     file,

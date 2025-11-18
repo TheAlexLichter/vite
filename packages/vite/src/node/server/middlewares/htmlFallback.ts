@@ -1,8 +1,8 @@
 import path from 'node:path'
 import fs from 'node:fs'
-import type { Connect } from 'dep-types/connect'
 import { createDebugger } from '../../utils'
 import { cleanUrl } from '../../../shared/utils'
+import type { Connect } from '#dep-types/connect'
 
 const debug = createDebugger('vite:html-fallback')
 
@@ -29,7 +29,13 @@ export function htmlFallbackMiddleware(
     }
 
     const url = cleanUrl(req.url!)
-    const pathname = decodeURIComponent(url)
+    let pathname
+    try {
+      pathname = decodeURIComponent(url)
+    } catch {
+      // ignore malformed URI
+      return next()
+    }
 
     // .html files are not handled by serveStaticMiddleware
     // so we need to check if the file exists

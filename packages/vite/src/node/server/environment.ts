@@ -1,4 +1,3 @@
-import type { FSWatcher } from 'dep-types/chokidar'
 import colors from 'picocolors'
 import type { FetchFunctionOptions, FetchResult } from 'vite/module-runner'
 import { BaseEnvironment } from '../baseEnvironment'
@@ -22,7 +21,10 @@ import { EnvironmentModuleGraph } from './moduleGraph'
 import type { EnvironmentModuleNode } from './moduleGraph'
 import type { HotChannel, NormalizedHotChannel } from './hmr'
 import { getShortName, normalizeHotChannel, updateModules } from './hmr'
-import type { TransformResult } from './transformRequest'
+import type {
+  TransformOptionsInternal,
+  TransformResult,
+} from './transformRequest'
 import { transformRequest } from './transformRequest'
 import type { EnvironmentPluginContainer } from './pluginContainer'
 import {
@@ -32,6 +34,7 @@ import {
 import { type WebSocketServer, isWebSocketServer } from './ws'
 import { warmupFiles } from './warmup'
 import { buildErrorMessage } from './middlewares/error'
+import type { FSWatcher } from '#dep-types/chokidar'
 
 export interface DevEnvironmentContext {
   hot: boolean
@@ -130,6 +133,13 @@ export class DevEnvironment extends BaseEnvironment {
       fetchModule: (id, importer, options) => {
         return this.fetchModule(id, importer, options)
       },
+      getBuiltins: async () => {
+        return this.config.resolve.builtins.map((builtin) =>
+          typeof builtin === 'string'
+            ? { type: 'string', value: builtin }
+            : { type: 'RegExp', source: builtin.source, flags: builtin.flags },
+        )
+      },
     })
 
     this.hot.on(
@@ -206,8 +216,12 @@ export class DevEnvironment extends BaseEnvironment {
     }
   }
 
-  transformRequest(url: string): Promise<TransformResult | null> {
-    return transformRequest(this, url)
+  transformRequest(
+    url: string,
+    /** @internal */
+    options?: TransformOptionsInternal,
+  ): Promise<TransformResult | null> {
+    return transformRequest(this, url, options)
   }
 
   async warmupRequest(url: string): Promise<void> {

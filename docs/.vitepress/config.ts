@@ -295,10 +295,6 @@ export default defineConfig({
               link: '/guide/ssr',
             },
             {
-              text: 'Backend Integration',
-              link: '/guide/backend-integration',
-            },
-            {
               text: 'Troubleshooting',
               link: '/guide/troubleshooting',
             },
@@ -317,6 +313,32 @@ export default defineConfig({
             {
               text: 'Breaking Changes',
               link: '/changes/',
+            },
+          ],
+        },
+        {
+          text: 'Integrations',
+          items: [
+            {
+              text: 'TypeScript',
+              link: '/guide/integration-typescript',
+            },
+            {
+              text: 'Full-Stack',
+              link: '/guide/integration-full-stack',
+            },
+            {
+              text: 'Frameworks',
+              link: '/guide/integration-frameworks',
+            },
+            {
+              text: 'Styling',
+              link: '/guide/integration-styling',
+            },
+            {
+              text: 'Backend',
+              // TODO: REDIRECT
+              link: '/guide/integration-backend',
             },
           ],
         },

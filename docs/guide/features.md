@@ -122,18 +122,13 @@ export default defineConfig({
 ## CSS
 
 Importing `.css` files will inject its content to the page via a `<style>` tag with HMR support.
+If you plant to use Styling integrations like PostCSS, Tailwind CSS or CSS pre-processors, check out the [Styling Integration guide](/guide/integration-styling).
 
 ### `@import` Inlining and Rebasing
 
 Vite is pre-configured to support CSS `@import` inlining via `postcss-import`. Vite aliases are also respected for CSS `@import`. In addition, all CSS `url()` references, even if the imported files are in different directories, are always automatically rebased to ensure correctness.
 
 `@import` aliases and URL rebasing are also supported for Sass and Less files (see [CSS Pre-processors](#css-pre-processors)).
-
-### PostCSS
-
-If the project contains valid PostCSS config (any format supported by [postcss-load-config](https://github.com/postcss/postcss-load-config), e.g. `postcss.config.js`), it will be automatically applied to all imported CSS.
-
-Note that CSS minification will run after PostCSS and will use [`build.cssTarget`](/config/build-options.md#build-csstarget) option.
 
 ### CSS Modules
 
@@ -163,31 +158,6 @@ import 'vite/client'
 import { applyColor } from './example.module.css'
 document.getElementById('foo').className = applyColor
 ```
-
-### CSS Pre-processors
-
-Because Vite targets modern browsers only, it is recommended to use native CSS variables with PostCSS plugins that implement CSSWG drafts (e.g. [postcss-nesting](https://github.com/csstools/postcss-plugins/tree/main/plugins/postcss-nesting)) and author plain, future-standards-compliant CSS.
-
-That said, Vite does provide built-in support for `.scss`, `.sass`, `.less`, `.styl` and `.stylus` files. There is no need to install Vite-specific plugins for them, but the corresponding pre-processor itself must be installed:
-
-```bash
-# .scss and .sass
-npm add -D sass-embedded # or sass
-
-# .less
-npm add -D less
-
-# .styl and .stylus
-npm add -D stylus
-```
-
-If using Vue single file components, this also automatically enables `<style lang="sass">` et al.
-
-Vite improves `@import` resolving for Sass and Less so that Vite aliases are also respected. In addition, relative `url()` references inside imported Sass/Less files that are in different directories from the root file are also automatically rebased to ensure correctness. Rebasing `url()` references that starts with a variable or a interpolation are not supported due to its API constraints.
-
-`@import` alias and url rebasing are not supported for Stylus due to its API constraints.
-
-You can also use CSS modules combined with pre-processors by prepending `.module` to the file extension, for example `style.module.scss`.
 
 ### Disabling CSS injection into the page
 

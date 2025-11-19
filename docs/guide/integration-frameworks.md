@@ -12,7 +12,8 @@ Most commonly, Vite plugins for frameworks are maintained by the respective fram
 - [Angular](https://angular.dev/) which uses Vite as dev-server only via the [Angular CLI](https://angular.dev/tools/cli)
 - [Solid](https://solidjs.com) via [`vite-plugin-solid`](https://github.com/solidjs/vite-plugin-solid)
 - [Qwik](https://qwik.dev/) via [`@builder.io/qwik/optimizer`](https://github.com/QwikDev/qwik/blob/main/packages/qwik/src/optimizer/src/plugins/vite.ts)
-- [Ember](https://emberjs.com/)
+- [Ripple] via [`vite-plugin-ripple`](https://github.com/Ripple-TS/ripple/tree/main/packages/vite-plugin)
+- [Ember](https://emberjs.com/) via [`@embroider/vite`](https://github.com/embroider-build/embroider)
 
 ## Meta Frameworks
 

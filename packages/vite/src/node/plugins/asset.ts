@@ -46,7 +46,10 @@ export const inlineRE: RegExp = /[?&]inline\b/
 const assetCache = new WeakMap<Environment, Map<string, string>>()
 
 /** a set of referenceId for entry CSS assets for each environment */
-export const cssEntriesMap = new WeakMap<Environment, Map<string, string>>()
+export const cssEntriesMap = new WeakMap<
+  Environment,
+  Map<string, string>
+>()
 
 // add own dictionary entry by directly assigning mrmime
 export function registerCustomMime(): void {

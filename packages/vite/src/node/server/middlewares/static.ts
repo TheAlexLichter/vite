@@ -3,6 +3,7 @@ import type { OutgoingHttpHeaders, ServerResponse } from 'node:http'
 import type { Options } from 'sirv'
 import sirv from 'sirv'
 import escapeHtml from 'escape-html'
+import type { Connect } from '#dep-types/connect'
 import type { ViteDevServer } from '../../server'
 import type { ResolvedConfig } from '../../config'
 import { FS_PREFIX } from '../../constants'
@@ -24,7 +25,6 @@ import {
   slash,
   withTrailingSlash,
 } from '../../../shared/utils'
-import type { Connect } from '#dep-types/connect'
 
 const knownJavascriptExtensionRE = /\.(?:[tj]sx?|[cm][tj]s)$/
 const ERR_DENIED_FILE = 'ERR_DENIED_FILE'

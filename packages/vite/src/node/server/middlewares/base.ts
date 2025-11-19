@@ -1,6 +1,6 @@
+import type { Connect } from '#dep-types/connect'
 import { joinUrlSegments, stripBase } from '../../utils'
 import { cleanUrl, withTrailingSlash } from '../../../shared/utils'
-import type { Connect } from '#dep-types/connect'
 
 // this middleware is only active when (base !== '/')
 

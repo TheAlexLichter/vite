@@ -1,13 +1,13 @@
 import { pathToFileURL } from 'node:url'
 import { WorkerWithFallback } from 'artichokie'
-import type { Plugin } from '../plugin'
-import type { ResolvedConfig } from '..'
-import { _dirname, generateCodeFrame } from '../utils'
-import { nodeResolveWithVite } from '../nodeResolve'
 import type {
   TerserMinifyOptions,
   TerserMinifyOutput,
 } from '#types/internal/terserOptions'
+import type { Plugin } from '../plugin'
+import type { ResolvedConfig } from '..'
+import { _dirname, generateCodeFrame } from '../utils'
+import { nodeResolveWithVite } from '../nodeResolve'
 
 export interface TerserOptions extends TerserMinifyOptions {
   /**

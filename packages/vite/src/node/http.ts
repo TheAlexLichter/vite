@@ -3,10 +3,10 @@ import path from 'node:path'
 import type { OutgoingHttpHeaders as HttpServerHeaders } from 'node:http'
 import type { ServerOptions as HttpsServerOptions } from 'node:https'
 import colors from 'picocolors'
+import type { Connect } from '#dep-types/connect'
 import type { ProxyOptions } from './server/middlewares/proxy'
 import type { Logger } from './logger'
 import type { HttpServer } from './server'
-import type { Connect } from '#dep-types/connect'
 
 export interface CommonServerOptions {
   /**

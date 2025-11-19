@@ -29,6 +29,13 @@ import type {
   TransformAttributeResult as LightningCssTransformAttributeResult,
   TransformResult as LightningCssTransformResult,
 } from 'lightningcss'
+import type {
+  LessPreprocessorBaseOptions,
+  SassModernPreprocessBaseOptions,
+  StylusPreprocessorBaseOptions,
+} from '#types/internal/cssPreprocessorOptions'
+import type { LightningCSSOptions } from '#types/internal/lightningcssOptions'
+import type { CustomPluginOptionsVite } from '#types/metadata'
 import { getCodeWithSourcemap, injectSourcesContent } from '../server/sourcemap'
 import type { EnvironmentModuleNode } from '../server/moduleGraph'
 import {
@@ -99,13 +106,6 @@ import {
 } from './asset'
 import type { ESBuildOptions } from './esbuild'
 import { getChunkOriginalFileName } from './manifest'
-import type { CustomPluginOptionsVite } from '#types/metadata'
-import type { LightningCSSOptions } from '#types/internal/lightningcssOptions'
-import type {
-  LessPreprocessorBaseOptions,
-  SassModernPreprocessBaseOptions,
-  StylusPreprocessorBaseOptions,
-} from '#types/internal/cssPreprocessorOptions'
 
 const decoder = new TextDecoder()
 // const debug = createDebugger('vite:css')
@@ -270,13 +270,13 @@ const cssModulesCache = new WeakMap<
   Map<string, Record<string, string>>
 >()
 
-export const removedPureCssFilesCache = new WeakMap<
+export const removedPureCssFilesCache: WeakMap<
   ResolvedConfig,
   Map<string, RenderedChunk>
->()
+> = new WeakMap()
 
 // Used only if the config doesn't code-split CSS (builds a single CSS file)
-export const cssBundleNameCache = new WeakMap<ResolvedConfig, string>()
+export const cssBundleNameCache: WeakMap<ResolvedConfig, string> = new WeakMap()
 
 const postcssConfigCache = new WeakMap<
   ResolvedConfig,

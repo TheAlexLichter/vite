@@ -15,6 +15,7 @@ import MagicString from 'magic-string'
 import { stringifyQuery } from 'ufo'
 import { parseAstAsync } from 'rollup/parseAst'
 import { escapePath, glob } from 'tinyglobby'
+import type { GeneralImportGlobOptions } from '#types/importGlob'
 import type { Plugin } from '../plugin'
 import type { EnvironmentModuleNode } from '../server/moduleGraph'
 import type { ResolvedConfig } from '../config'
@@ -22,7 +23,6 @@ import { evalValue, normalizePath, transformStableResult } from '../utils'
 import type { Logger } from '../logger'
 import { slash } from '../../shared/utils'
 import type { Environment } from '../environment'
-import type { GeneralImportGlobOptions } from '#types/importGlob'
 
 export interface ParsedImportGlob {
   index: number

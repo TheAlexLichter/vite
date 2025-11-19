@@ -11,6 +11,7 @@ import type { RawSourceMap } from '@jridgewell/remapping'
 import type { InternalModuleFormat, SourceMap } from 'rollup'
 import type { TSConfckParseResult } from 'tsconfck'
 import { TSConfckCache, TSConfckParseError, parse } from 'tsconfck'
+import type { FSWatcher } from '#dep-types/chokidar'
 import {
   combineSourcemaps,
   createDebugger,
@@ -22,7 +23,6 @@ import type { ViteDevServer } from '../server'
 import type { ResolvedConfig } from '../config'
 import type { Plugin } from '../plugin'
 import { cleanUrl } from '../../shared/utils'
-import type { FSWatcher } from '#dep-types/chokidar'
 
 const debug = createDebugger('vite:esbuild')
 

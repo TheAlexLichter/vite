@@ -1,4 +1,5 @@
 import { existsSync, readFileSync } from 'node:fs'
+import type { HotPayload } from '#types/hmrPayload'
 import { ModuleRunner, createNodeImportMeta } from 'vite/module-runner'
 import type {
   ModuleEvaluator,
@@ -11,7 +12,6 @@ import type {
   NormalizedServerHotChannel,
 } from '../../server/hmr'
 import type { ModuleRunnerTransport } from '../../../shared/moduleRunnerTransport'
-import type { HotPayload } from '#types/hmrPayload'
 
 /**
  * @experimental

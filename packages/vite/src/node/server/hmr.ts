@@ -3,6 +3,7 @@ import path from 'node:path'
 import { EventEmitter } from 'node:events'
 import colors from 'picocolors'
 import type { RollupError } from 'rollup'
+import type { CustomPayload, HotPayload, Update } from '#types/hmrPayload'
 import type {
   InvokeMethods,
   InvokeResponseData,
@@ -31,7 +32,6 @@ import {
 } from './pluginContainer'
 import type { HttpServer } from '.'
 import { restartServerWithUrls } from '.'
-import type { CustomPayload, HotPayload, Update } from '#types/hmrPayload'
 
 export const debugHmr: ((...args: any[]) => any) | undefined =
   createDebugger('vite:hmr')

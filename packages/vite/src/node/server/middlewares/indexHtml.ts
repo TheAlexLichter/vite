@@ -4,6 +4,7 @@ import path from 'node:path'
 import MagicString from 'magic-string'
 import type { SourceMapInput } from 'rollup'
 import type { DefaultTreeAdapterMap, Token } from 'parse5'
+import type { Connect } from '#dep-types/connect'
 import type { IndexHtmlTransformHook } from '../../plugins/html'
 import {
   addToHTMLProxyCache,
@@ -49,7 +50,6 @@ import {
   basePluginContextMeta,
 } from '../pluginContainer'
 import { checkLoadingAccess, respondWithAccessDenied } from './static'
-import type { Connect } from '#dep-types/connect'
 
 interface AssetNode {
   start: number

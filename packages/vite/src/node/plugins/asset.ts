@@ -46,10 +46,10 @@ export const inlineRE: RegExp = /[?&]inline\b/
 const assetCache = new WeakMap<Environment, Map<string, string>>()
 
 /** a set of referenceId for entry CSS assets for each environment */
-export const cssEntriesMap = new WeakMap<
+export const cssEntriesMap: WeakMap<
   Environment,
   Map<string, string>
->()
+> = new WeakMap()
 
 // add own dictionary entry by directly assigning mrmime
 export function registerCustomMime(): void {
@@ -346,10 +346,10 @@ export function getPublicAssetFilename(
 }
 
 // inner map: hash -> url
-export const publicAssetUrlCache = new WeakMap<
+export const publicAssetUrlCache: WeakMap<
   ResolvedConfig,
   Map<string, string>
->()
+> = new WeakMap()
 
 export const publicAssetUrlRE: RegExp = /__VITE_PUBLIC_ASSET__([a-z\d]{8})__/g
 

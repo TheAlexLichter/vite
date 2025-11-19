@@ -3,10 +3,10 @@ import path from 'node:path'
 import type { OutputOptions } from 'rollup'
 import colors from 'picocolors'
 import { escapePath } from 'tinyglobby'
+import type { FSWatcher, WatchOptions } from '#dep-types/chokidar'
 import { withTrailingSlash } from '../shared/utils'
 import { arraify, normalizePath } from './utils'
 import type { Logger } from './logger'
-import type { FSWatcher, WatchOptions } from '#dep-types/chokidar'
 
 export function getResolvedOutDirs(
   root: string,

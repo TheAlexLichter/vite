@@ -20,6 +20,8 @@ import type { Equal } from '@type-challenges/utils'
 
 import type { TransformResult } from 'rollup'
 import { createFilter as _createFilter } from '@rollup/pluginutils'
+import type { Alias, AliasOptions } from '#dep-types/alias'
+import type { FSWatcher } from '#dep-types/chokidar'
 import {
   cleanUrl,
   isWindows,
@@ -49,8 +51,6 @@ import {
   resolvePackageData,
 } from './packages'
 import type { CommonServerOptions } from '.'
-import type { FSWatcher } from '#dep-types/chokidar'
-import type { Alias, AliasOptions } from '#dep-types/alias'
 
 /**
  * Inlined to keep `@rollup/pluginutils` in devDependencies

@@ -1,7 +1,7 @@
+import isModuleSyncConditionEnabled from '#module-sync-enabled'
 import { DEFAULT_EXTENSIONS } from './constants'
 import { tryNodeResolve } from './plugins/resolve'
 import { nodeLikeBuiltins } from './utils'
-import isModuleSyncConditionEnabled from '#module-sync-enabled'
 
 export interface NodeResolveWithViteOptions {
   root: string

@@ -1,3 +1,5 @@
+import type { ErrorPayload, HotPayload } from '#types/hmrPayload'
+import type { ViteHotContext } from '#types/hot'
 import { HMRClient, HMRContext } from '../shared/hmr'
 import {
   createWebSocketModuleRunnerTransport,
@@ -5,8 +7,6 @@ import {
 } from '../shared/moduleRunnerTransport'
 import { createHMRHandler } from '../shared/hmrHandler'
 import { ErrorOverlay, cspNonce, overlayId } from './overlay'
-import type { ViteHotContext } from '#types/hot'
-import type { ErrorPayload, HotPayload } from '#types/hmrPayload'
 import '@vite/env'
 
 // injected by the hmr plugin when served

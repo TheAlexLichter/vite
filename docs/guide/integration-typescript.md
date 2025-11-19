@@ -2,7 +2,9 @@
 
 Vite supports importing `.ts` files out of the box.
 
-Note that Vite only performs transpilation on `.ts` files and **does not perform type checking**. It assumes type checking is taken care of by your IDE and build process.
+:::info
+Vite only performs transpilation on `.ts` files and **does not perform type checking**. It assumes type checking is taken care of by your IDE and build process.
+:::
 
 The reason Vite does not perform type checking as part of the transform process is because the two jobs work fundamentally differently. Transpilation can work on a per-file basis and aligns perfectly with Vite's on-demand compile model. In comparison, type checking requires knowledge of the entire module graph. Shoe-horning type checking into Vite's transform pipeline will inevitably compromise Vite's speed benefits.
 

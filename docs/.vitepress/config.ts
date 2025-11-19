@@ -319,6 +319,10 @@ export default defineConfig({
               link: '/guide/integration-typescript',
             },
             {
+              text: 'Styling',
+              link: '/guide/integration-styling',
+            },
+            {
               text: 'Full-Stack',
               link: '/guide/integration-full-stack',
             },
@@ -327,8 +331,8 @@ export default defineConfig({
               link: '/guide/integration-frameworks',
             },
             {
-              text: 'Styling',
-              link: '/guide/integration-styling',
+              text: 'Desktop & Mobile',
+              link: '/guide/integration-desktop-mobile',
             },
             {
               text: 'Backend',

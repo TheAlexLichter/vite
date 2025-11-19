@@ -1,20 +1,18 @@
 # Framework Integration
 
-## Frameworks
+The Vite team maintains Vite plugins for two JavaScript frameworks:
 
-- Official support via Vite
+- React via [`@vitejs/plugin-react`](https://github.com/vitejs/vite-plugin-react/), also with [React Server Component support](https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-rsc).
+- Vue.js via [`@vitejs/plugin-vue`](https://github.com/vitejs/vite-plugin-vue/)
 
-  - React
-  - Vue
+Most commonly, Vite plugins for frameworks are maintained by the respective framework teams or communities. These include:
 
-- Maintained by the respective framework teams
-  - Svelte
-  - Preact
-  - Angular (dev-server only)
-  - Solid
-  - Qwik
-  - [Marko](https://github.com/marko-js/vite)
-  - Ember
+- [Svelte](https://svelte.dev/) via [`vite-plugin-svelte`](https://github.com/sveltejs/vite-plugin-svelte)
+- Preact via [`@preactjs/preset-vite`](https://github.com/preactjs/preset-vite)
+- [Angular](https://angular.dev/) which uses Vite as dev-server only via the [Angular CLI](https://angular.dev/tools/cli)
+- [Solid](https://solidjs.com) via [`vite-plugin-solid`](https://github.com/solidjs/vite-plugin-solid)
+- [Qwik](https://qwik.dev/) via [`@builder.io/qwik/optimizer`](https://github.com/QwikDev/qwik/blob/main/packages/qwik/src/optimizer/src/plugins/vite.ts)
+- [Ember](https://emberjs.com/)
 
 ## Meta Frameworks
 
@@ -27,6 +25,7 @@ Hint to full-stack integration guide
   - SolidStart
   - Analog
   - Redwood SDK
+  - [Marko](https://markojs.com) via [`@marko/vite`](https://github.com/marko-js/vite)
 
 - Meta frameworks that are based on Vite:
   - Astro

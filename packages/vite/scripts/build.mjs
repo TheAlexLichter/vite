@@ -33,7 +33,7 @@ function run(cmd, args, label) {
 const bundle = run(bin('rolldown'), ['--config', 'rolldown.config.ts'], 'build-bundle')
 
 const types = run(bin('rolldown'), ['--config', 'rolldown.dts.config.ts'], 'build-types-roll').then(
-  () => run(bin('tsc'), ['--project', 'tsconfig.check.json'], 'build-types-check'),
+  () => run(process.execPath, [resolve(pkgDir, 'scripts/checkDist.mjs')], 'build-types-check'),
 )
 
 const results = await Promise.allSettled([bundle, types])

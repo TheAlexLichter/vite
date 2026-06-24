@@ -10,6 +10,7 @@
 /packages/vite/LICENSE
 dist
 dist-ssr
+.types-check
 explorations
 node_modules
 !**/glob-import/root/dir/node_modules

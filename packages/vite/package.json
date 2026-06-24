@@ -57,7 +57,7 @@
   },
   "scripts": {
     "dev": "premove dist && pnpm build-bundle -w",
-    "build": "premove dist && pnpm build-bundle && pnpm build-types",
+    "build": "premove dist && node scripts/build.mjs",
     "build-bundle": "rolldown --config rolldown.config.ts",
     "build-types": "pnpm build-types-roll && pnpm build-types-check",
     "build-types-roll": "rolldown --config rolldown.dts.config.ts",

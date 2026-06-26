@@ -16,46 +16,44 @@
 // fraction of the cost.
 import { spawnSync } from 'node:child_process'
 import {
-  cpSync,
   mkdirSync,
   readdirSync,
   readFileSync,
-  renameSync,
   rmSync,
   writeFileSync,
 } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { createRequire } from 'node:module'
-import { dirname, join, resolve } from 'node:path'
+import { dirname, join, relative, resolve } from 'node:path'
 
 const pkgDir = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const tmpDir = join(pkgDir, '.types-check')
 
-/** @param {string} dir */
-function walk(dir) {
-  /** @type {string[]} */
-  const out = []
+/** @param {string} dir @param {string[]} out */
+function walkDts(dir, out = []) {
   for (const entry of readdirSync(dir, { withFileTypes: true })) {
     const full = join(dir, entry.name)
-    if (entry.isDirectory()) out.push(...walk(full))
-    else out.push(full)
+    if (entry.isDirectory()) walkDts(full, out)
+    else if (full.endsWith('.d.ts')) out.push(full)
   }
   return out
 }
 
-rmSync(tmpDir, { recursive: true, force: true })
-mkdirSync(tmpDir, { recursive: true })
-cpSync(join(pkgDir, 'dist'), join(tmpDir, 'dist'), { recursive: true })
-cpSync(join(pkgDir, 'types'), join(tmpDir, 'types'), { recursive: true })
-
 const referencePathRE = /(\/\/\/\s*<reference\s+path=["'][^"']+?)\.d\.ts(["'])/g
-for (const file of walk(tmpDir)) {
-  if (!file.endsWith('.d.ts')) continue
-  // Rewrite `/// <reference path="x.d.ts" />` to point at the renamed `.ts`.
-  const code = readFileSync(file, 'utf8').replace(referencePathRE, '$1.ts$2')
-  const renamed = file.slice(0, -'.d.ts'.length) + '.ts'
-  writeFileSync(file, code)
-  renameSync(file, renamed)
+
+rmSync(tmpDir, { recursive: true, force: true })
+// Write each emitted `.d.ts` into the temp dir as `.ts` (preserving the dir
+// layout so relative imports resolve). Only declarations need checking, so we
+// skip everything else — and avoid `fs.cpSync` (unsupported on Node 20.19).
+for (const dir of ['dist', 'types']) {
+  for (const file of walkDts(join(pkgDir, dir))) {
+    const rel = relative(pkgDir, file).slice(0, -'.d.ts'.length) + '.ts'
+    const dest = join(tmpDir, rel)
+    // Rewrite `/// <reference path="x.d.ts" />` to point at the renamed `.ts`.
+    const code = readFileSync(file, 'utf8').replace(referencePathRE, '$1.ts$2')
+    mkdirSync(dirname(dest), { recursive: true })
+    writeFileSync(dest, code)
+  }
 }
 
 writeFileSync(

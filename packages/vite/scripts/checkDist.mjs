@@ -25,6 +25,7 @@ import {
   writeFileSync,
 } from 'node:fs'
 import { fileURLToPath } from 'node:url'
+import { createRequire } from 'node:module'
 import { dirname, join, resolve } from 'node:path'
 
 const pkgDir = resolve(dirname(fileURLToPath(import.meta.url)), '..')
@@ -78,10 +79,18 @@ writeFileSync(
   ),
 )
 
-const tsc = resolve(pkgDir, 'node_modules/.bin/tsc')
-const res = spawnSync(tsc, ['--project', join(tmpDir, 'tsconfig.json')], {
-  cwd: pkgDir,
-  stdio: 'inherit',
-})
+// Resolve TypeScript's own entry rather than a `.bin/tsc` path: `typescript`
+// is hoisted to the workspace root, so `packages/vite/node_modules/.bin/tsc`
+// does not exist under a clean (strict) pnpm install.
+const tscBin = createRequire(import.meta.url).resolve('typescript/bin/tsc')
+const res = spawnSync(
+  process.execPath,
+  [tscBin, '--project', join(tmpDir, 'tsconfig.json')],
+  { cwd: pkgDir, stdio: 'inherit' },
+)
 rmSync(tmpDir, { recursive: true, force: true })
+if (res.error) {
+  console.error(res.error)
+  process.exit(1)
+}
 process.exit(res.status ?? 1)
